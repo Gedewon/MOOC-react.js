@@ -1,16 +1,8 @@
-import React, { Component } from "react";
-import {
-  Card,
-  CardImg,
-  CardImgOverlay,
-  CardText,
-  CardBody,
-  CardTitle,
-} from "reactstrap";
-class dishDetail extends Component {
-  state = {};
+import React from "react";
+import { Card, CardImg, CardText, CardBody, CardTitle } from "reactstrap";
 
-  renderComments(comments) {
+const dishDetail = (props) => {
+  const renderComments = (comments) => {
     let comment = null;
     if (comments) {
       comment = comments.map((comment) => {
@@ -18,7 +10,12 @@ class dishDetail extends Component {
           <div key={comment.id}>
             <li>{comment.comment}</li>
             <li>
-              --{comment.author}, {comment.date}`
+              --{comment.author},{" "}
+              {new Intl.DateTimeFormat("en-US", {
+                year: "numeric",
+                month: "short",
+                day: "2-digit",
+              }).format(new Date(Date.parse(comment.date)))}
             </li>
           </div>
         );
@@ -30,8 +27,8 @@ class dishDetail extends Component {
         </React.Fragment>
       );
     } else return <div></div>;
-  }
-  renderDish(dish) {
+  };
+  const renderDish = (dish) => {
     return (
       <Card>
         <CardImg top src={dish.image} alt={dish.name} />
@@ -41,23 +38,21 @@ class dishDetail extends Component {
         </CardBody>
       </Card>
     );
-  }
+  };
 
-  render() {
-    if (this.props.dish != null)
-      return (
-        <div className="row">
-          <div className="col-12 col-md-5 m-1">
-            {this.renderDish(this.props.dish)}
-          </div>
+  if (props.dish != null)
+    return (
+      <div className="container">
+        <div className="row ">
+          <div className="col-12 col-md-5 m-1">{renderDish(props.dish)}</div>
 
           <div className="col-12 col-md-5 m-1">
-            {this.renderComments(this.props.dish.comments)}
+            {renderComments(props.dish.comments)}
           </div>
         </div>
-      );
-    else return <div></div>;
-  }
-}
+      </div>
+    );
+  else return <div></div>;
+};
 
 export default dishDetail;
