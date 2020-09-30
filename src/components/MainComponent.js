@@ -9,6 +9,7 @@ import { PROMOTIONS } from "../shared/promotions";
 import DISHDETAIL from "./DishdetailComponent";
 import Home from "./HomeCompont";
 import Contact from "./ContactComponent";
+import AboutUs from "./AboutComponent";
 
 import { Switch, Route, Redirect } from "react-router-dom";
 class Main extends Component {
@@ -70,6 +71,13 @@ class Main extends Component {
           />
           <Route path="/menu/:dishId" component={this.DishWithId} />
           <Route exact path="/contactus" component={Contact} />
+
+          {/* the new route l added for the aboutus component  */}
+          <Route
+            exact
+            path="/aboutus"
+            component={() => <AboutUs leaders={LEADERS} />}
+          />
 
           <Redirect to="/home" />
         </Switch>
