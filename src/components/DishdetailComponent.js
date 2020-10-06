@@ -26,10 +26,20 @@ class CommentForm extends Component {
     });
   };
 
-  handleSubmit = (event) => {
-    console.log("Current State is: " + JSON.stringify(this.state));
-    alert("Current State is: " + JSON.stringify(this.state));
-    event.preventDefault();
+  handleSubmit = (values) => {
+    // console.log("Current State is: " + JSON.stringify(this.state));
+    // alert("Current State is: " + JSON.stringify(this.state));
+    // event.preventDefault();
+    console.log(values);
+    this.props.addComment(
+      this.props.dishId,
+      values.rating,
+      values.name,
+      values.comment
+    );
+    this.setState({
+      isModalOpen: !this.state.isModalOpen,
+    });
   };
 
   render() {
@@ -42,7 +52,7 @@ class CommentForm extends Component {
         <Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal}>
           <ModalHeader toggle={this.toggleModal}>Submit Comment</ModalHeader>
           <ModalBody>
-            <LocalForm onSubmit={(event) => this.handleSubmit(event)}>
+            <LocalForm onSubmit={(values) => this.handleSubmit(values)}>
               <FormGroup>
                 <Label htmlFor="rating">Rating</Label>
                 <Control.select
@@ -106,7 +116,7 @@ class CommentForm extends Component {
 }
 
 const dishDetail = (props) => {
-  const renderComments = (comments) => {
+  const renderComments = (comments, addComment, dishId) => {
     let comment = null;
     if (comments) {
       comment = comments.map((comment) => {
@@ -128,6 +138,7 @@ const dishDetail = (props) => {
         <React.Fragment>
           <h4>Comments</h4>
           <ul className="list-unstyled">{comment}</ul>
+          <CommentForm dishId={dishId} addComment={addComment} />
         </React.Fragment>
       );
     } else return <div></div>;
@@ -163,8 +174,8 @@ const dishDetail = (props) => {
           <div className="col-12 col-md-5 m-1">{renderDish(props.dish)}</div>
 
           <div className="col-12 col-md-5 m-1">
-            {renderComments(props.comments)}
-            <CommentForm />
+            {renderComments(props.comments, props.addComment, props.dish.id)}
+            {/* <CommentForm /> */}
           </div>
         </div>
       </div>
