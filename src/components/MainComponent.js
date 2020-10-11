@@ -16,6 +16,8 @@ import {
 import { Switch, Route, Redirect, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { actions } from "react-redux-form";
+import { TransitionGroup, CSSTransition } from 'react-transition-group';
+
 class Main extends Component {
   componentDidMount() {
     this.props.fetchDishes();
@@ -56,8 +58,9 @@ class Main extends Component {
             )[0]
           }
         /> */}
-
-        <Switch>
+ <TransitionGroup>
+            <CSSTransition key={this.props.location.key} classNames="page" timeout={300}>
+              <Switch location={this.props.location}>
           <Route
             path="/home"
             component={() => (
@@ -101,6 +104,8 @@ class Main extends Component {
 
           <Redirect to="/home" />
         </Switch>
+        </CSSTransition>
+        </TransitionGroup>
         <Footer />
       </div>
     );
