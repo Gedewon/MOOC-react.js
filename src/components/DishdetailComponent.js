@@ -33,7 +33,7 @@ class CommentForm extends Component {
     // alert("Current State is: " + JSON.stringify(this.state));
     // event.preventDefault();
     console.log(values);
-    this.props.addComment(
+    this.props.postComment(
       this.props.dishId,
       values.rating,
       values.name,
@@ -118,7 +118,7 @@ class CommentForm extends Component {
 }
 
 const dishDetail = (props) => {
-  const renderComments = (comments, addComment, dishId) => {
+  const renderComments = (comments, postComment, dishId) => {
     let comment = null;
     if (comments) {
       comment = comments.map((comment) => {
@@ -140,7 +140,7 @@ const dishDetail = (props) => {
         <React.Fragment>
           <h4>Comments</h4>
           <ul className="list-unstyled">{comment}</ul>
-          <CommentForm dishId={dishId} addComment={addComment} />
+          <CommentForm dishId={dishId} postComment={postComment} />
         </React.Fragment>
       );
     } else return <div></div>;
@@ -192,7 +192,7 @@ const dishDetail = (props) => {
           <div className="col-12 col-md-5 m-1">{renderDish(props.dish)}</div>
 
           <div className="col-12 col-md-5 m-1">
-            {renderComments(props.comments, props.addComment, props.dish.id)}
+            {renderComments(props.comments, props.postComment, props.dish.id)}
             {/* <CommentForm /> */}
           </div>
         </div>

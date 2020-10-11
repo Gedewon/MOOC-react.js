@@ -10,28 +10,35 @@ import {
 import { baseUrl } from "../shared/baseUrl";
 
 import { Loading } from "./LoadingComponent";
-
+const RenderCard = (props) => {
+  if (props.isLoading) {
+    return <Loading />;
+  } else if (props.errMessage) {
+    return (
+      <div className="container">
+        <div className="row">
+          <h4>{props.errMessage}</h4>
+        </div>
+      </div>
+    );
+    // console.log(errMessage);
+    // return <h4>{errMessage}</h4>;
+  } else
+    return (
+      <Card>
+        <CardImg src={baseUrl + props.item.image} alt={props.item.name} />
+        <CardBody>
+          <CardTitle>{props.item.name}</CardTitle>
+          {props.item.designation ? (
+            <CardSubtitle>{props.item.designation}</CardSubtitle>
+          ) : null}
+          <CardText>{props.item.description}</CardText>
+        </CardBody>
+      </Card>
+    );
+};
 const Home = (props) => {
   // console.log(props);
-  const RenderCard = ({ item, isLoading, errMessage }) => {
-    if (isLoading) {
-      return <Loading />;
-    } else if (errMessage) {
-      return <h4>{errMessage}</h4>;
-    } else
-      return (
-        <Card>
-          <CardImg src={baseUrl + item.image} alt={item.name} />
-          <CardBody>
-            <CardTitle>{item.name}</CardTitle>
-            {item.designation ? (
-              <CardSubtitle>{item.designation}</CardSubtitle>
-            ) : null}
-            <CardText>{item.description}</CardText>
-          </CardBody>
-        </Card>
-      );
-  };
 
   return (
     <div className="container">
