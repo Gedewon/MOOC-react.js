@@ -12,7 +12,7 @@ import {
   Label,
 } from "reactstrap";
 import { baseUrl } from "../shared/baseUrl";
-
+import { FadeTransform, Fade, Stagger } from 'react-animation-components';
 import { Control, LocalForm, Errors } from "react-redux-form";
 import { Loading } from "./LoadingComponent";
 const maxLength = (len) => (val) => !val || val.length <= len;
@@ -123,6 +123,8 @@ const dishDetail = (props) => {
     if (comments) {
       comment = comments.map((comment) => {
         return (
+          <Fade in>
+
           <div key={comment.id}>
             <li>{comment.comment}</li>
             <li>
@@ -134,12 +136,19 @@ const dishDetail = (props) => {
               }).format(new Date(Date.parse(comment.date)))}
             </li>
           </div>
+          </Fade>
+          
+
         );
       });
       return (
         <React.Fragment>
           <h4>Comments</h4>
-          <ul className="list-unstyled">{comment}</ul>
+          <ul className="list-unstyled">
+          <Stagger in>
+            {comment}
+            </Stagger>
+            </ul>
           <CommentForm dishId={dishId} postComment={postComment} />
         </React.Fragment>
       );
@@ -147,6 +156,12 @@ const dishDetail = (props) => {
   };
   const renderDish = (dish) => {
     return (
+
+      <FadeTransform
+      in
+      transformProps={{
+          exitTransform: 'scale(0.5) translateY(-50%)'
+      }}>
       <Card>
         <CardImg top src={baseUrl + dish.image} alt={dish.name} />
         <CardBody>
@@ -154,6 +169,7 @@ const dishDetail = (props) => {
           <CardText>{dish.description}</CardText>
         </CardBody>
       </Card>
+      </FadeTransform>
     );
   };
 
