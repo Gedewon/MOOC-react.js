@@ -8,6 +8,8 @@ import {
   Col,
 } from "reactstrap";
 import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+
 import { Control, Form, actions, Errors } from "react-redux-form";
 
 const required = (val) => val && val.length;
@@ -42,10 +44,10 @@ class Contact extends Component {
   //   });
   // };
 
-  handleSubmit = (event) => {
-    console.log("Current State is: " + JSON.stringify(this.state));
-    alert("Current State is: " + JSON.stringify(this.state));
-    event.preventDefault();
+  handleSubmit = (values) => {
+    this.props.postFeedback(values);
+   
+    // values.preventDefault();
     this.props.resetFeedbackForm();
   };
   // handleBlur = (field) => (evt) => {
@@ -328,4 +330,5 @@ class Contact extends Component {
   }
 }
 
-export default Contact;
+
+export default (Contact);
